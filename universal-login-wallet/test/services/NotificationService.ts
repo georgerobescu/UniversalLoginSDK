@@ -3,7 +3,7 @@ import {expect} from 'chai';
 import {NotificationService} from '../../src/services/NotificationService';
 import UniversalLoginSDK from 'universal-login-sdk';
 import {setupSdk} from 'universal-login-sdk/test';
-import WalletService from "../../src/services/WalletService";
+import WalletService from '../../src/services/WalletService';
 import {waitUntil} from 'universal-login-commons';
 
 describe('NotificationService', () => {
@@ -27,7 +27,7 @@ describe('NotificationService', () => {
         const callback = sinon.spy();
         const unsubscribe = await notificationService.subscribe(callback);
         await sdk.connect(contractAddress);
-        await waitUntil(() => callback.firstCall !== null)
+        await waitUntil(() => callback.firstCall !== null);
 
         expect(callback).has.been.called;
         unsubscribe();
@@ -36,5 +36,5 @@ describe('NotificationService', () => {
     after(async () => {
         await sdk.finalizeAndStop();
         await relayer.stop();
-    })
+    });
 });
