@@ -25,7 +25,7 @@ describe('NotificationService', () => {
 
     it('works', async () => {
         const callback = sinon.spy();
-        const unsubscribe = await notificationService.subscribe(callback);
+        const unsubscribe = notificationService.subscribe(callback);
         await sdk.connect(contractAddress);
         await waitUntil(() => callback.firstCall !== null);
 

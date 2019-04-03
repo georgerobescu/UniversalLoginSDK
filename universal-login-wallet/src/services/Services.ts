@@ -10,6 +10,7 @@ import TransferService from './TransferService';
 import TokenService from './TokenService';
 import {EtherBalanceService} from './balance/EtherBalanceService';
 import {BalanceService} from './balance/BalanceService';
+import {NotificationService} from "./NotificationService";
 import {providers} from 'ethers';
 
 interface Config {
@@ -37,6 +38,7 @@ export const createServices = (config: Config, {provider} : Overrides = {}) => {
   const transferService = new TransferService(sdk, walletService, tokenService);
   const etherBalanceService = new EtherBalanceService(sdk.provider, walletService);
   const balanceService = new BalanceService(etherBalanceService);
+  const notificationService = new NotificationService(walletService, sdk);
   return {
     sdk,
     suggestionsService,
@@ -48,7 +50,8 @@ export const createServices = (config: Config, {provider} : Overrides = {}) => {
     walletService,
     tokenService,
     transferService,
-    balanceService
+    balanceService,
+    notificationService
   };
 };
 
