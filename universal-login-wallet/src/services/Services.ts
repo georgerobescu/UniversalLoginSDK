@@ -10,7 +10,7 @@ import TransferService from './TransferService';
 import TokenService from './TokenService';
 import {EtherBalanceService} from './balance/EtherBalanceService';
 import {BalanceService} from './balance/BalanceService';
-import {NotificationService} from "./NotificationService";
+import {NotificationService} from './NotificationService';
 import {providers} from 'ethers';
 
 interface Config {
