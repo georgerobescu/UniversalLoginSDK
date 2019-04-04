@@ -24,7 +24,7 @@ function Sidebar() {
           <NavLink
             to="/notifications"
             id="notificationsLink"
-            className={`sidebar-link notifications-link ${newNotifications ? 'new-notifications' : ''}`}
+            className={`sidebar-link notifications-lgit ink ${newNotifications ? 'new-notifications' : ''}`}
           />
         </li>
         <li className="sidebar-button sidebar-list-item">

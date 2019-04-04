@@ -26,4 +26,8 @@ export default class DashboardPage {
   getWalletBalance() : string {
     return this.wrapper.find('span.balance-amount-highlighted').text();
   }
+
+  isNotificationAlert() {
+    console.log(this.wrapper.debug());
+  }
 }

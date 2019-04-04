@@ -9,13 +9,13 @@ export class NotificationService {
     }
 
     subscribe (callback: Procedure) {
-
+        callback(this.notifications.length !== 0);
         const subscription = this.sdk.subscribe(
             'AuthorisationsChanged',
             {contractAddress: this.walletService.userWallet!.contractAddress},
             (authorisations: any) => {
                 this.notifications = authorisations;
-                callback(authorisations);
+                callback(authorisations.length !== 0);
             });
         return () => { subscription.remove(); };
     }

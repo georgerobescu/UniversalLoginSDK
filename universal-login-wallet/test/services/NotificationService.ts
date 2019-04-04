@@ -1,14 +1,12 @@
 import sinon from 'sinon';
 import {expect} from 'chai';
 import {providers} from 'ethers';
-import {NotificationService} from '../../src/services/NotificationService';
 import {Services} from '../../src/services/Services';
 import {setupSdk} from 'universal-login-sdk/test';
 import {waitUntil, ETHER_NATIVE_TOKEN} from 'universal-login-commons';
 import preconfigureServices from '../helpers/preconfigureServices';
 
 describe('NotificationService', () => {
-    let notificationService: NotificationService;
     let relayer: any;
     let services : Services;
     let contractAddress: string;
@@ -21,12 +19,11 @@ describe('NotificationService', () => {
         services.sdk.start();
         const name = 'ja.mylogin.eth';
         [privateKey, contractAddress] = await services.createWallet(name);
-        notificationService = new NotificationService(services.sdk, services.walletService);
     });
 
-    it('works', async () => {
+    it('should call callback when new notification', async () => {
         const callback = sinon.spy();
-        const unsubscribe = notificationService.subscribe(callback);
+        const unsubscribe = services.notificationService.subscribe(callback);
         await services.sdk.connect(contractAddress);
         await waitUntil(() => callback.firstCall !== null);
 
