@@ -38,7 +38,7 @@ export const createServices = (config: Config, {provider} : Overrides = {}) => {
   const transferService = new TransferService(sdk, walletService, tokenService);
   const etherBalanceService = new EtherBalanceService(sdk.provider, walletService);
   const balanceService = new BalanceService(etherBalanceService);
-  const notificationService = new NotificationService(walletService, sdk);
+  const notificationService = new NotificationService(sdk, walletService);
   return {
     sdk,
     suggestionsService,

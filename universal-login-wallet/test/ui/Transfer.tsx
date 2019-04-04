@@ -7,7 +7,7 @@ import {providers, utils, Contract} from 'ethers';
 import {createFixtureLoader} from 'ethereum-waffle';
 import {setupSdk} from '@universal-login/sdk/test';
 import {Services} from '../../src/services/Services';
-import ServicesUnderTest from '../helpers/ServicesUnderTests';
+import preconfigureServices from '../helpers/preconfigureServices';
 import {mountWithContext} from '../helpers/CustomMount';
 import {deployMockToken} from '@universal-login/commons/test';
 import {createAndSendInitial} from '../utils/utils';
@@ -23,7 +23,7 @@ describe('UI: Transfer', () => {
   before(async () => {
     ({relayer, provider} = await setupSdk({overridePort: 33113}));
     ({mockTokenContract} = await createFixtureLoader(provider)(deployMockToken));
-    services = await ServicesUnderTest.createPreconfigured(provider, relayer, [mockTokenContract.address]);
+    services = await preconfigureServices(provider, relayer, [mockTokenContract.address]);
     services.tokenService.start();
     services.balanceService.start();
   });

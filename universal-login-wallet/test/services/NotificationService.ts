@@ -1,32 +1,33 @@
 import sinon from 'sinon';
 import {expect} from 'chai';
+import {providers} from 'ethers';
 import {NotificationService} from '../../src/services/NotificationService';
-import UniversalLoginSDK from 'universal-login-sdk';
+import {Services} from '../../src/services/Services';
 import {setupSdk} from 'universal-login-sdk/test';
-import WalletService from '../../src/services/WalletService';
-import {waitUntil} from 'universal-login-commons';
+import {waitUntil, ETHER_NATIVE_TOKEN} from 'universal-login-commons';
+import preconfigureServices from '../helpers/preconfigureServices';
 
 describe('NotificationService', () => {
     let notificationService: NotificationService;
-    let sdk: UniversalLoginSDK;
     let relayer: any;
+    let services : Services;
     let contractAddress: string;
     let privateKey: string;
+    let provider : providers.Web3Provider;
 
     before(async () => {
-        ({sdk, relayer} = await setupSdk());
-        sdk.start();
+        ({relayer, provider} = await setupSdk({overridePort: 33113}));
+        services = await preconfigureServices(provider, relayer, [ETHER_NATIVE_TOKEN.address]);
+        services.sdk.start();
         const name = 'ja.mylogin.eth';
-        [privateKey, contractAddress] = await sdk.create(name);
-        const walletService = new WalletService();
-        walletService.userWallet = {contractAddress, privateKey, name};
-        notificationService = new NotificationService(walletService, sdk);
+        [privateKey, contractAddress] = await services.createWallet(name);
+        notificationService = new NotificationService(services.sdk, services.walletService);
     });
 
     it('works', async () => {
         const callback = sinon.spy();
         const unsubscribe = notificationService.subscribe(callback);
-        await sdk.connect(contractAddress);
+        await services.sdk.connect(contractAddress);
         await waitUntil(() => callback.firstCall !== null);
 
         expect(callback).has.been.called;
@@ -34,7 +35,7 @@ describe('NotificationService', () => {
     });
 
     after(async () => {
-        await sdk.finalizeAndStop();
+        await services.sdk.finalizeAndStop();
         await relayer.stop();
     });
 });

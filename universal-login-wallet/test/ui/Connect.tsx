@@ -9,9 +9,7 @@ import {ETHER_NATIVE_TOKEN} from '@universal-login/commons';
 import ServicesUnderTest from '../helpers/ServicesUnderTests';
 import {AppPage} from '../pages/AppPage';
 import {getWallets} from 'ethereum-waffle';
-import chai, {expect} from 'chai';
-
-chai.use(require('chai-string'));
+import {expect} from 'chai';
 
 
 describe('UI: Connect', () => {

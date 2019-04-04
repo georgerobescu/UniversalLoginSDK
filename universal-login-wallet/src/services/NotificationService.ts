@@ -5,7 +5,7 @@ import UniversalLoginSDK from 'universal-login-sdk';
 export class NotificationService {
     private notifications = [];
 
-    constructor (private walletService: WalletService, private sdk: UniversalLoginSDK) {
+    constructor (private sdk: UniversalLoginSDK, private walletService: WalletService) {
     }
 
     subscribe (callback: Procedure) {
