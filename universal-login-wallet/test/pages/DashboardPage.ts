@@ -28,6 +28,6 @@ export default class DashboardPage {
   }
 
   isNotificationAlert() {
-    console.log(this.wrapper.debug());
+    // console.log(this.wrapper.debug());
   }
 }

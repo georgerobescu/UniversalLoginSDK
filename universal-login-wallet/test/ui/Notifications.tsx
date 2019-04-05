@@ -30,4 +30,11 @@ describe('UI: Notifications',  () => {
     appPage.dashboard().isNotificationAlert();
   });
 
+  after(async () => {
+    appWrapper.unmount();
+    services.balanceService.stop();
+    await services.sdk.finalizeAndStop();
+    await relayer.stop();
+  });
+
 });
