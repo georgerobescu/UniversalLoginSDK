@@ -8,7 +8,7 @@ function Sidebar() {
   const {userDropdownService, notificationService} = useServices();
   const [newNotifications, setNewNotifications] = useState(false);
 
-  useEffect(() => notificationService.subscribe(setNewNotifications));
+  useEffect(() => notificationService.subscribe(notifications => setNewNotifications(notifications.length !== 0)));
 
   return (
     <div className="sidebar">
@@ -24,7 +24,7 @@ function Sidebar() {
           <NavLink
             to="/notifications"
             id="notificationsLink"
-            className={`sidebar-link notifications-lgit ink ${newNotifications ? 'new-notifications' : ''}`}
+            className={`sidebar-link notifications-link ${newNotifications ? 'new-notifications' : ''}`}
           />
         </li>
         <li className="sidebar-button sidebar-list-item">

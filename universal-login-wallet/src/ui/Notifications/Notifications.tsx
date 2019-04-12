@@ -1,17 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NotificationConnection from './NotificationConnection';
 import NotificationTransaction from './NotificationTransaction';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { useServices } from '../../hooks';
 
 const Notifications = () => {
-  const [notifications, setNotifications] = useState(placeholderTransactionData);
+  const {notificationService} = useServices();
+  const [notifications, setNotifications] = useState([]);
 
-  const removeNotification = (id: number) => {
-    const filteredNotifications = notifications.filter((notification: any) => (
-      notification.id !== id
-    ));
+  useEffect(() => notificationService.subscribe(setNotifications));
 
-    setNotifications(filteredNotifications);
+  interface Notification {
+    id: number;
+    key: string;
+    walletContractAddress: string;
+    deviceInfo: any;
+  }
+  const removeNotification = (id: number, callback: CallableFunction) => {
+    const notification: Notification = notifications.find((notification: any) => (
+      notification.id === id
+    ))!;
+    if (notification){
+      callback(notification.walletContractAddress, notification.key);
+    }
+  };
+
+  const confirmRequest = (id: number) => {
+    removeNotification(id, notificationService.confirm);
+  };
+
+  const rejectRequest = (id: number) => {
+    removeNotification(id, notificationService.reject);
   };
 
   return (
@@ -22,13 +41,17 @@ const Notifications = () => {
             if (notification.type === 'transaction') {
               return (
                 <CSSTransition key={notification.id} timeout={200} classNames="move" >
-                  <NotificationTransaction key={notification.id} removeNotification={removeNotification} data={notification}/>
+                  <NotificationTransaction key={notification.id} removeNotification={() => () => {}} data={notification}/>
                 </CSSTransition>
               );
             } else {
               return (
                 <CSSTransition key={notification.id} timeout={200} classNames="move" >
-                  <NotificationConnection removeNotification={removeNotification} data={notification} />
+                  <NotificationConnection
+                    confirm={confirmRequest}
+                    reject={rejectRequest}
+                    data={{deviceId: notification.id, id: notification.id, device: 'mobile', deviceInfo: `${notification.deviceInfo.name}, ${notification.deviceInfo.os}`}}
+                  />
                 </CSSTransition>
               );
             }

@@ -27,7 +27,17 @@ export default class DashboardPage {
     return this.wrapper.find('span.balance-amount-highlighted').text();
   }
 
-  isNotificationAlert() {
-    // console.log(this.wrapper.debug());
+  isNotificationAlert(): boolean {
+    this.wrapper.update();
+    return this.wrapper.exists('.new-notifications');
+  }
+
+  async waitForNewNotifications() {
+    try {
+      this.wrapper.update();
+      await waitForUI(this.wrapper, () => this.wrapper.text().includes('new-notifications'), 1000);
+    } catch {
+      this.wrapper.update();
+    }
   }
 }
