@@ -8,6 +8,7 @@
   "devDependencies": {
     "@codechecks/build-size-watcher": "^0.0.14",
     "@codechecks/client": "^0.0.58",
+    "@codechecks/type-coverage-watcher": "^0.0.8",
     "chalk": "^2.0.1"
   },
   "workspaces": [

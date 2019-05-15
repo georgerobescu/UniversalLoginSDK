@@ -9,6 +9,12 @@
           { "path": "./universal-login-wallet/dist/*.css" }
         ]
       }
+    },
+    { 
+      "name": "type-coverage-watcher",
+      "options": {
+        "tsconfigPath": "./universal-login-relayer/tsconfig.json"
+      }
     }
   ]
 }
