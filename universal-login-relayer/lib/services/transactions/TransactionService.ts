@@ -83,6 +83,10 @@ class TransactionService {
   stop() {
     this.transactionQueue.stop();
   }
+
+  async stopLater() {
+    this.transactionQueue.stopLater();
+  }
 }
 
 export default TransactionService;
