@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import { Message } from '@universal-login/commons';
-import getMessageWith from '../config/message';
+import getMessageWith from '../helpers/message';
 import {encodeDataForExecuteSigned, decodeDataForExecuteSigned} from '../../lib/utils/transactions';
 
 describe('Coding transaction data', () => {
